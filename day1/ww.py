@@ -1,4 +1,4 @@
-f = open('testcase')
+f = open('input')
 
 cals = [0]
 i = 0

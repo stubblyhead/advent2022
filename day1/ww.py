@@ -1,4 +1,4 @@
-f = open('testcase')
+f = open('input')
 
 cals = [0]
 i = 0
@@ -14,5 +14,4 @@ while True:
     
 print(max(cals))
 cals.sort()
-print(cals)
 print(sum(cals[-3:]))

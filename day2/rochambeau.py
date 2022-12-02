@@ -1,28 +1,38 @@
 f = open('testcase')
 
-score = 0
+wrongscore = 0
+rightscore = 0
 while True:
     line = (f.readline()).strip()
     if len(line) == 0:
         break
-    print(line)
     if line == 'A X':
-        score = score + 3 + 1
+        wrongscore = wrongscore + 3 + 1
+        rightscore += 3
     elif line == 'A Y':
-        score = score + 6 + 2
+        wrongscore = wrongscore + 6 + 2
+        rightscore += 4
     elif line == 'A Z':
-        score += 3
+        wrongscore += 3
+        rightscore += 8
     elif line == 'B X':
-        score += 1
+        wrongscore += 1
+        rightscore += 1
     elif line == 'B Y':
-        score = score + 3 + 2
+        wrongscore = wrongscore + 3 + 2
+        rightscore += 5
     elif line == 'B Z':
-        score = score + 6 + 3
+        wrongscore = wrongscore + 6 + 3
+        rightscore += 9
     elif line == 'C X':
-        score = score + 6 + 1
+        wrongscore = wrongscore + 6 + 1
+        rightscore += 2
     elif line == 'C Y':
-        score += 2
+        wrongscore += 2
+        rightscore += 6
     elif line == 'C Z':
-        score = score + 3 + 3
+        wrongscore = wrongscore + 3 + 3
+        rightscore += 7
 
-print(score)
+print(wrongscore)
+print(rightscore)

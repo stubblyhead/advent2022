@@ -1,4 +1,4 @@
-f = open('testcase')
+f = open('input')
 
 wrongscore = 0
 rightscore = 0

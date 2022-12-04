@@ -1,4 +1,4 @@
-f = open('testcase')
+f = open('input')
 lines = f.readlines(-1)
 
 overlaps = 0

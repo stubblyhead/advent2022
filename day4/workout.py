@@ -1,4 +1,4 @@
-f = open('input')
+f = open('testcase')
 lines = f.readlines(-1)
 
 overlaps = 0
@@ -13,12 +13,12 @@ while lines:
     bEnd = int(bEnd)
 
     if aStart <= bStart:
-        if aEnd >= bEnd:
+        if aEnd >= bStart:
             overlaps += 1
             continue  # ranges could be identical, need to avoid double-counting
 
     if bStart <= aStart:
-        if bEnd >= aEnd:
+        if bEnd >= aStart:
             overlaps += 1
 
 print(overlaps)

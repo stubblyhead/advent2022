@@ -17,12 +17,12 @@ with open('input') as f:
 print(sum)
 
 sum = 0
-f = open('testcase')
+f = open('input')
 lines = f.readlines(-1)
 while lines:
-    aset = {i for i in lines.pop()}
-    bset = {i for i in lines.pop()}
-    cset = {i for i in lines.pop()}
+    aset = {i for i in lines.pop().strip()}
+    bset = {i for i in lines.pop().strip()}
+    cset = {i for i in lines.pop().strip()}
 
     dupe = (aset & bset & cset).pop()
     

@@ -15,6 +15,7 @@ while lines:
     if aStart <= bStart:
         if aEnd >= bEnd:
             overlaps += 1
+            continue  # ranges could be identical, need to avoid double-counting
 
     if bStart <= aStart:
         if bEnd >= aEnd:

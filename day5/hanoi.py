@@ -1,5 +1,7 @@
 import itertools
-lines = open('testcase').readlines(-1)
+import re
+
+lines = open('input').readlines(-1)
 
 stacks = [[]] # putting something at the start will make move parsing easier
 moves = []
@@ -18,4 +20,20 @@ for i in range(len(lines)):
       lines[i][:] = [j for j in lines[i] if j != ' '] # remove all spaces
     stacks.append(lines[i])
 
-  
+for m in moves:
+  match = re.search(r"(\d+).*(\d+).*(\d+)", m) # get the numbers out
+  num = int(match.group(1))
+  source = int(match.group(2))
+  dest = int(match.group(3))
+
+  for i in range(num):
+      stacks[dest].insert(0,stacks[source].pop(0))
+      # pop the first value from source and insert it to beginning of desk num times
+
+print(stacks)
+answer = ''
+for s in stacks:
+    if s == []:
+        continue
+    answer += s[0]
+print(answer)

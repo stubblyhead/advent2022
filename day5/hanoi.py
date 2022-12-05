@@ -30,7 +30,6 @@ for m in moves:
       stacks[dest].insert(0,stacks[source].pop(0))
       # pop the first value from source and insert it to beginning of desk num times
 
-print(stacks)
 answer = ''
 for s in stacks:
     if s == []:

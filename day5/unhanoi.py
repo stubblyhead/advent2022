@@ -1,7 +1,7 @@
 import itertools
 import re
 
-lines = open('input').readlines(-1)
+lines = open('testcase').readlines(-1)
 
 stacks = [[]] # putting something at the start will make move parsing easier
 moves = []
@@ -26,9 +26,8 @@ for m in moves:
   source = int(match.group(2))
   dest = int(match.group(3))
 
-  for i in range(num):
-      stacks[dest].insert(0,stacks[source].pop(0))
-      # pop the first value from source and insert it to beginning of desk num times
+  stacks[dest] = stacks[source][0:num] + stacks[dest]
+  stacks[source] = stacks[source][num:]
 
 answer = ''
 for s in stacks:

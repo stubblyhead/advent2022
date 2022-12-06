@@ -1,7 +1,7 @@
 import itertools
 import re
 
-lines = open('testcase').readlines(-1)
+lines = open('input').readlines(-1)
 
 stacks = [[]] # putting something at the start will make move parsing easier
 moves = []

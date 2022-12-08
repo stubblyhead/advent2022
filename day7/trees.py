@@ -9,7 +9,7 @@ fs = []
 parent = None
 cur = None
 
-lines = open('testcase').readlines(-1)
+lines = open('input').readlines(-1)
 
 for l in lines:
     parts = l.strip().split()
@@ -65,5 +65,6 @@ for f in fs:
         if f.size < smallest.size:
             smallest = f
 
-print(smallest.name)
+print(smallest.size)
+
 

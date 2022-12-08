@@ -43,10 +43,10 @@ for i in range(len(grid[0])):
         if col[j] > max(col[j+1:]):
             visible[i][j] = True
 
-for row in visible:
-    thisrow = ''
-    for col in row:
-        if col:
+for row in range(len(visible)):
+    thisrow = str(row+1) + '\t'
+    for col in range(len(visible[row])):
+        if visible[row][col]:
             thisrow += 'T'
         else:
             thisrow += ' '

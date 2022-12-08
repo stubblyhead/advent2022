@@ -9,7 +9,7 @@ fs = []
 parent = None
 cur = None
 
-lines = open('testcase').readlines(-1)
+lines = open('input').readlines(-1)
 
 for l in lines:
     parts = l.strip().split()
@@ -28,8 +28,6 @@ for l in lines:
             cur = fs[-1]
 
     if parts[0] == 'dir':
-        #dirname = parts[1]
-        #dirs[dirname] = File(dirname, 0, parent=cur)
         continue
 
     if parts[0].isnumeric():
@@ -44,8 +42,9 @@ def backfill(node):
         return node.size
             
 
-for pre, fill, node in anytree.RenderTree(fs[0]):
-    print("%s%s %i" % (pre, node.name, node.size))
+#for pre, fill, node in anytree.RenderTree(fs[0]):
+#    print("%s%s %i" % (pre, node.name, node.size))
+
 backfill(fs[0])
 
 

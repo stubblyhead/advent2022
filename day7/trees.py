@@ -40,3 +40,24 @@ for pre, fill, node in anytree.RenderTree(dirs['root']):
 
 for d in dirs.values():
     print(d.name, d.size)
+    
+def backfill(node):
+    if node.children == None:
+        return node.size
+    else:
+        for f in node.children:
+            node.size += backfill(f)
+        return node.size
+            
+
+backfill(dirs['root'])
+
+for d in dirs.values():
+    print(d.name, d.size)
+
+smalldirs = 0
+for d in dirs.values():
+    if d.size <= 100000:
+        smalldirs += d.size
+
+print(smalldirs)

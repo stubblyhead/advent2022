@@ -5,18 +5,14 @@ class File(anytree.Node):
         super().__init__(name,parent=parent)
         self.size = size
 
-
-
+fs = []
+parent = None
+cur = None
 
 lines = open('testcase').readlines(-1)
-dirs = {'root': File('root',0,parent=None)}
-cur = dirs['root']
 
 for l in lines:
     parts = l.strip().split()
-    if parts[0].isnumeric():
-        print("in dir %s new file of size %s, currently %i" % (cur.name, parts[0], cur.size))
-        cur.size += int(parts[0])
         
     if parts[1] == 'ls':
         continue # don't think we need to do anything here
@@ -24,23 +20,21 @@ for l in lines:
     if parts[1] == 'cd':
         dest = parts[2]
         if dest == '..':
-            continue
-        if dest == '/':
-            continue
-        cur = dirs[dest]
+            cur = cur.parent
+            parent = cur.parent
+        else:
+            parent = cur
+            fs.append(File(dest, 0, parent = parent))
+            cur = fs[-1]
 
     if parts[0] == 'dir':
-        print(dirs)
-        dirname = parts[1]
-        print("looking at %s, parent is %s" % (dirname, cur.name))
-        dirs[dirname] = File(dirname, 0, parent=cur)
+        #dirname = parts[1]
+        #dirs[dirname] = File(dirname, 0, parent=cur)
+        continue
 
-for pre, fill, node in anytree.RenderTree(dirs['root']):
-    print("%s%s" % (pre, node.name))
+    if parts[0].isnumeric():
+        fs.append(File(parts[1],int(parts[0]),parent = cur))
 
-for d in dirs.values():
-    print(d.name, d.size)
-    
 def backfill(node):
     if node.children == None:
         return node.size
@@ -50,14 +44,15 @@ def backfill(node):
         return node.size
             
 
-backfill(dirs['root'])
+for pre, fill, node in anytree.RenderTree(fs[0]):
+    print("%s%s %i" % (pre, node.name, node.size))
+backfill(fs[0])
 
-for d in dirs.values():
-    print(d.name, d.size)
 
 smalldirs = 0
-for d in dirs.values():
-    if d.size <= 100000:
-        smalldirs += d.size
+for f in fs:
+    if f.size <= 100000 and f.children:
+      smalldirs += f.size
 
 print(smalldirs)
+

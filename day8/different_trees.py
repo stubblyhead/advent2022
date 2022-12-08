@@ -1,6 +1,6 @@
 from copy import deepcopy
 
-lines = open('testcase')
+lines = open('input')
 grid = []
 
 
@@ -42,7 +42,7 @@ for i in range(len(grid[0])):
     for j in range(len(col)-1):
         if col[j] > max(col[j+1:]):
             visible[i][j] = True
-'''
+
 for row in visible:
     thisrow = ''
     for col in row:
@@ -51,7 +51,7 @@ for row in visible:
         else:
             thisrow += ' '
     print(thisrow)
-'''
+
 
 count = 0
 for row in visible:

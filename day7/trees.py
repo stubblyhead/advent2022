@@ -1,16 +1,23 @@
 import anytree
 
+class File(anytree.Node):
+    def __init__(self,name,size,parent):
+        super().__init__(name,parent=parent)
+        self.size = size
+
+
+
 
 lines = open('testcase').readlines(-1)
-dirs = {'root': [anytree.Node('root'),0]}
-cur = dirs['root'][0]
-
+dirs = {'root': File('root',0,parent=None)}
+cur = dirs['root']
 
 for l in lines:
     parts = l.strip().split()
     if parts[0].isnumeric():
-        continue # skipping files for now
-    
+        print("in dir %s new file of size %s, currently %i" % (cur.name, parts[0], cur.size))
+        cur.size += int(parts[0])
+        
     if parts[1] == 'ls':
         continue # don't think we need to do anything here
 
@@ -20,19 +27,16 @@ for l in lines:
             continue
         if dest == '/':
             continue
-        cur = dirs[dest][0]
+        cur = dirs[dest]
 
     if parts[0] == 'dir':
         print(dirs)
         dirname = parts[1]
         print("looking at %s, parent is %s" % (dirname, cur.name))
-        dirs[dirname] = []
-        dirs[dirname].append(anytree.Node(dirname, parent=cur))
-        dirs[dirname].append(0)
+        dirs[dirname] = File(dirname, 0, parent=cur)
 
-
-for pre, fill, node in anytree.RenderTree(dirs['root'][0]):
+for pre, fill, node in anytree.RenderTree(dirs['root']):
     print("%s%s" % (pre, node.name))
 
 for d in dirs.values():
-    print(d[0].parent)
+    print(d.name, d.size)

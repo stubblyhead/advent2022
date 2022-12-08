@@ -33,6 +33,8 @@ for i in range(len(grid)):
             visible[i][j] = True
 
 for i in range(len(grid[0])):
+    visible[0][i] = True
+    visible[0][-i] = True
     col = get_col(grid, i)
     for j in range(1,len(col)):
         if col[j] > max(col[0:j]):

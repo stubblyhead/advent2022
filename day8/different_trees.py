@@ -1,6 +1,6 @@
 from copy import deepcopy
 
-lines = open('testcase')
+lines = open('input')
 grid = []
 
 
@@ -51,18 +51,6 @@ for h in range(4):
     grid = rotate(grid)
     visible = rotate(visible)
 
-'''
-for i in range(len(grid[0])):
-    visible[0][i] = True
-    visible[-1][i] = True
-    col = get_col(grid, i)
-    for j in range(1,len(col)):
-        if col[j] > max(col[0:j]):
-            visible[i][j] = True
-    for j in range(len(col)-1):
-        if col[j] > max(col[j+1:]):
-            visible[i][j] = True
-'''
 
 count = 0
 for row in visible:

@@ -1,6 +1,6 @@
 from copy import deepcopy
 
-lines = open('input')
+lines = open('testcase')
 grid = []
 
 
@@ -60,4 +60,53 @@ for row in visible:
 
 print(count)
 
+# there's probaby a better way to do this
+def look_north(grid, row, col):
+    count = 0
+    trees = get_col(grid, col)[0:row] # get the trees to the north of the current position
+    trees.reverse() # need to start from the bottomw
 
+    for t in trees:
+        count += 1
+        if t >= grid[row][col]:
+            break
+    return count
+
+def look_south(grid, row, col):
+    count = 0
+    trees = get_col(grid,col)[row+1:]
+
+    for t in trees:
+        count += 1
+        if t >= grid[row][col]:
+            break
+    return count
+
+def look_east(grid, row, col):
+    count = 0
+    trees = grid[row][col+1:]
+
+    for t in trees:
+        count += 1
+        if t >= grid[row][col]:
+            break
+    return count
+
+def look_west(grid, row, col):
+    count = 0
+    trees = grid[row][0:col]
+    trees.reverse()
+
+    for t in trees:
+        count += 1
+        if t >= grid[row][col]:
+            break
+    return count
+
+scores = []
+for i in range(1,len(grid)-1):
+    for j in range(1,len(grid[i])-1):
+        current_score = look_north(grid,i,j) * look_south(grid,i,j) * look_west(grid,i,j) * look_east(grid,i,j)
+        scores.append(current_score)
+
+print(max(scores))

@@ -1,6 +1,6 @@
 from copy import deepcopy
 
-lines = open('testcase')
+lines = open('input')
 grid = []
 
 

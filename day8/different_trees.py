@@ -38,17 +38,18 @@ def print_grid(a):
         print(thisrow)
     print('\n')
 
-for i in range(4):
+for h in range(4):
     for i in range(len(grid)):
         visible[i][0] = True  # first and last items are always visible
         visible[i][-1] = True
         for j in range(1,len(grid[i])):
             if grid[i][j] > max(grid[i][0:j]): # current item is larger than the tallest thing to the left
                 visible[i][j] = True 
-      for j in range(len(grid[i])-1):
+        for j in range(len(grid[i])-1):
             if grid[i][j] > max(grid[i][j+1:]): # current item is larger than the tallest thing to the right
                 visible[i][j] = True
-    rotate(grid)
+    grid = rotate(grid)
+    visible = rotate(visible)
 
 '''
 for i in range(len(grid[0])):

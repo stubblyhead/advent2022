@@ -1,6 +1,6 @@
 from copy import deepcopy
 
-lines = open('input')
+lines = open('testcase')
 grid = []
 
 
@@ -22,16 +22,35 @@ def get_col(a, c):
 def get_row(a,row):
     return row[a]
 
-for i in range(len(grid)):
-    visible[i][0] = True  # first and last items are always visible
-    visible[i][-1] = True
-    for j in range(1,len(grid[i])):
-        if grid[i][j] > max(grid[i][0:j]): # current item is larger than the tallest thing to the left
-            visible[i][j] = True 
-    for j in range(len(grid[i])-1):
-        if grid[i][j] > max(grid[i][j+1:]): # current item is larger than the tallest thing to the right
-            visible[i][j] = True
+def rotate(a):
+    rotated = []
+    for i in range(len(a[0])):
+        newrow = get_col(a,i)
+        newrow.reverse()
+        rotated.append(newrow)
+    return rotated
 
+def print_grid(a):
+    for row in range(len(grid)):
+        thisrow = str(row+1) + '\t'
+        for col in range(len(grid[row])):
+            thisrow += grid[row][col]
+        print(thisrow)
+    print('\n')
+
+for i in range(4):
+    for i in range(len(grid)):
+        visible[i][0] = True  # first and last items are always visible
+        visible[i][-1] = True
+        for j in range(1,len(grid[i])):
+            if grid[i][j] > max(grid[i][0:j]): # current item is larger than the tallest thing to the left
+                visible[i][j] = True 
+      for j in range(len(grid[i])-1):
+            if grid[i][j] > max(grid[i][j+1:]): # current item is larger than the tallest thing to the right
+                visible[i][j] = True
+    rotate(grid)
+
+'''
 for i in range(len(grid[0])):
     visible[0][i] = True
     visible[-1][i] = True
@@ -42,16 +61,7 @@ for i in range(len(grid[0])):
     for j in range(len(col)-1):
         if col[j] > max(col[j+1:]):
             visible[i][j] = True
-
-for row in range(len(visible)):
-    thisrow = str(row+1) + '\t'
-    for col in range(len(visible[row])):
-        if visible[row][col]:
-            thisrow += 'T'
-        else:
-            thisrow += ' '
-    print(thisrow)
-
+'''
 
 count = 0
 for row in visible:
@@ -60,4 +70,5 @@ for row in visible:
             count += 1
 
 print(count)
+
 

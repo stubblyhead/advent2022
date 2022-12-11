@@ -29,7 +29,7 @@ def move(dir, rope):
 
     return rope
 
-lines = open('testcase').readlines(-1)
+lines = open('testcase2').readlines(-1)
 
 above = below = left = right = 0
 cur_x = cur_y = 0

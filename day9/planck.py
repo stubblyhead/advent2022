@@ -1,3 +1,31 @@
+def move(dir, posn):
+    (head_x, head_y, tail_x, tail_y) = posn
+    if dir == 'U':
+        head_y -= 1 # move up the grid one space
+        if tail_y - head_y > 1: # tail only moves if direction to head and direction of travel are the same
+            tail_y -= 1  # always move up a space
+            tail_x = head_x # head and tail have to be orthogonal if tail moves
+    
+    if dir == 'D':
+        head_y += 1
+        if head_y - tail_y > 1:
+            tail_y += 1
+            tail_x = head_x
+
+    if dir == 'R':
+        head_x += 1
+        if head_x - tail_x > 1:
+            tail_x += 1
+            tail_y = head_y
+
+    if dir == 'L':
+        head_x -= 1
+        if tail_x - head_x > 1:
+            tail_x -= 1
+            tail_y = head_y
+
+    return (head_x, head_y, tail_x, tail_y)
+    
 lines = open('testcase').readlines(-1)
 
 above = below = left = right = 0
@@ -26,9 +54,6 @@ grid = [ [False for i in range(left+right+1)] for j in range(above+below+1) ]
 head_x = right
 head_y = above
 tail_x = right
-head_y = above
+tail_y = above
 grid[above][left] = True
 
-for i in grid:
-    print(i)
-    

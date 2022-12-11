@@ -47,8 +47,8 @@ for l in lines:
         cur_x -= num
         left = min(cur_x, left)
 
-print(left, right)
-print(above, below)
+#print(left, right)
+#print(above, below)
 
 grid = [ [False for i in range(left+right+1)] for j in range(above+below+1) ]
 head_x = left
@@ -57,4 +57,16 @@ tail_x = left
 tail_y = above
 grid[above][left] = True
 
-foo = move('U', [head_x, head_y, tail_x, tail_y])
+for l in lines:
+    (dir, steps) = l.strip().split()
+    steps = int(steps)
+
+    for i in range(steps):
+        (head_x, head_y, tail_x, tail_y) = move(dir, [head_x, head_y, tail_x, tail_y])
+        grid[tail_y][tail_x] = True
+
+count = 0
+for i in grid:
+    count += i.count(True)
+
+print(count)

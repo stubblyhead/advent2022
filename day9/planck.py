@@ -25,7 +25,7 @@ def move(dir, posn):
             tail_y = head_y
 
     return (head_x, head_y, tail_x, tail_y)
-    
+
 lines = open('testcase').readlines(-1)
 
 above = below = left = right = 0
@@ -51,9 +51,10 @@ print(left, right)
 print(above, below)
 
 grid = [ [False for i in range(left+right+1)] for j in range(above+below+1) ]
-head_x = right
+head_x = left
 head_y = above
-tail_x = right
+tail_x = left
 tail_y = above
 grid[above][left] = True
 
+foo = move('U', [head_x, head_y, tail_x, tail_y])

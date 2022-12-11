@@ -1,30 +1,33 @@
-def move(dir, posn):
-    (head_x, head_y, tail_x, tail_y) = posn
+def move(dir, rope):
     if dir == 'U':
-        head_y -= 1 # move up the grid one space
-        if tail_y - head_y > 1: # tail only moves if direction to head and direction of travel are the same
-            tail_y -= 1  # always move up a space
-            tail_x = head_x # head and tail have to be orthogonal if tail moves
+        rope[0][1] -= 1
+        for k in range(1,len(rope)):
+            if rope[k][1] - rope[k-1][1] > 1: # next knot only moves if direction to current and direction of travel are the same
+                rope[k][1] -= 1  # always move up a space
+                rope[k][0] = rope[k-1][0] # current and next knot have to be orthogonal if next moves
     
     if dir == 'D':
-        head_y += 1
-        if head_y - tail_y > 1:
-            tail_y += 1
-            tail_x = head_x
+        rope[0][1] += 1
+        for k in range(1,len(rope)):
+            if rope[k-1][1] - rope[k][1] > 1:
+                rope[k][1] += 1
+                rope[k][0] = rope[k-1][0]
 
     if dir == 'R':
-        head_x += 1
-        if head_x - tail_x > 1:
-            tail_x += 1
-            tail_y = head_y
+        rope[0][0] += 1
+        for k in range(1,len(rope)):
+            if rope[k-1][0] - rope[k][0] > 1:
+                rope[k][0] += 1
+                rope[k][1] = rope[k-1][1]
 
     if dir == 'L':
-        head_x -= 1
-        if tail_x - head_x > 1:
-            tail_x -= 1
-            tail_y = head_y
+        rope[0][0] -= 1
+        for k in range(1,len(rope)):
+            if rope[k][0] - rope[k-1][0] > 1:
+                rope[k][0]-= 1
+                rope[k][1] = rope[k-1][1]
 
-    return (head_x, head_y, tail_x, tail_y)
+    return rope
 
 lines = open('testcase').readlines(-1)
 
@@ -57,8 +60,8 @@ for l in lines:
     steps = int(steps)
 
     for i in range(steps):
-        (head_x, head_y, tail_x, tail_y) = move(dir, [head_x, head_y, tail_x, tail_y])
-        grid[tail_y][tail_x] = True
+        rope = move(dir, rope)
+        grid[rope[-1][1]][rope[-1][0]] = True
 
 count = 0
 for i in grid:

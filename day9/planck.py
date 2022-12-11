@@ -47,15 +47,13 @@ for l in lines:
         cur_x -= num
         left = min(cur_x, left)
 
-#print(left, right)
-#print(above, below)
 
-grid = [ [False for i in range(left+right+1)] for j in range(above+below+1) ]
-head_x = left
+grid = [ [False for i in range(-left+right+1)] for j in range(above-below+1) ]
+head_x = -left
 head_y = above
-tail_x = left
+tail_x = -left
 tail_y = above
-grid[above][left] = True
+grid[above][-left] = True
 
 for l in lines:
     (dir, steps) = l.strip().split()

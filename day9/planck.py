@@ -26,7 +26,7 @@ def move(dir, posn):
 
     return (head_x, head_y, tail_x, tail_y)
 
-lines = open('testcase').readlines(-1)
+lines = open('input').readlines(-1)
 
 above = below = left = right = 0
 cur_x = cur_y = 0

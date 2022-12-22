@@ -1,10 +1,23 @@
+from copy import deepcopy
+
 def move(dir, rope):
     if dir == 'U':
         rope[0][1] -= 1
         for k in range(1,len(rope)):
             if rope[k][1] - rope[k-1][1] > 1: # next knot only moves if direction to current and direction of travel are the same
+                if rope[k][0] - rope[k-1][0] > 1:
+                    rope[k][0] -= 1
+                elif rope[k-1][0] - rope[k][0] > 1:
+                    rope[k][0] += 1
+                else:
+                    rope[k][0] = rope[k-1][0]
                 rope[k][1] -= 1  # always move up a space
-                rope[k][0] = rope[k-1][0] # current and next knot have to be orthogonal if next moves
+            elif rope[k-1][0] - rope[k][0] > 1:
+                rope[k][0] += 1
+                rope[k][1] -= 1
+            elif rope[k][0] - rope[k-1][0] > 1:
+                rope[k][0] -= 1
+                rope[k][1] -= 1
     
     if dir == 'D':
         rope[0][1] += 1
@@ -29,6 +42,29 @@ def move(dir, rope):
 
     return rope
 
+def print_grid(grid, rope):
+    draw = deepcopy(grid)
+    for i in range(len(draw)):
+        for j in range(len(draw[i])):
+            if draw[i][j]:
+                draw[i][j] = '#'
+            else:
+                draw[i][j] = '.'
+    epor = deepcopy(rope)
+    epor.reverse()
+    for i in range(len(epor)):
+        (knot_x, knot_y) = epor[i]
+        draw[knot_y][knot_x] = 9-i
+    draw[knot_y][knot_x] = 'H'
+
+    for row in range(len(draw)):
+        thisrow = ''
+        for col in range(len(draw[row])):
+            thisrow += str(draw[row][col])
+        print(thisrow)
+        
+    print('\n')
+        
 lines = open('testcase2').readlines(-1)
 
 above = below = left = right = 0
@@ -56,6 +92,7 @@ rope = [ [-left,above] for i in range(10) ]
 grid[above][-left] = True
 
 for l in lines:
+    print_grid(grid, rope)
     (dir, steps) = l.strip().split()
     steps = int(steps)
 

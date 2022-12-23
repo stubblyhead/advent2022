@@ -1,79 +1,39 @@
 from copy import deepcopy
 
+def dist(a, b):
+    distance = abs(a[0]-b[0]) + abs(a[1]-b[1])
+    return distance
+
 def move(dir, rope):
     if dir == 'U':
         rope[0][1] -= 1
-        for k in range(1,len(rope)):
-            if rope[k][1] - rope[k-1][1] > 1: # previous knot is now two rows above
-                if rope[k][0] - rope[k-1][0] > 1: # diagonal up and right
-                    rope[k][0] -= 1
-                elif rope[k-1][0] - rope[k][0] > 1: # diagonal up and left
-                    rope[k][0] += 1
-                else:
-                    rope[k][0] = rope[k-1][0] # vertical knight move either directon
-                rope[k][1] -= 1  # always move up a space
-            elif rope[k-1][0] - rope[k][0] > 1: # horizontal knight move right
-                rope[k][0] += 1
-                rope[k][1] -= 1
-            elif rope[k][0] - rope[k-1][0] > 1: # horizontal knight move left
-                rope[k][0] -= 1
-                rope[k][1] -= 1
-    
-    if dir == 'D':
+    elif dir == 'D':
         rope[0][1] += 1
-        for k in range(1,len(rope)):
-            if rope[k-1][1] - rope[k][1] > 1: # previous knot is now two rows below
-                if rope[k-1][0] - rope[k][0] > 1: # diagonal down and right
-                    rope[k][0] += 1
-                elif rope[k][0] - rope[k-1][0] > 1: # diagonal down and left
-                    rope[k][0] -= 1
-                else:
-                    rope[k][0] = rope[k-1][0] #vertical knight move either direction
-                rope[k][1] += 1 # always move down a space
-            elif rope[k-1][0] - rope[k][0] > 1: # horizontal knight move right
-                rope[k][0] += 1
-                rope[k][1] += 1
-            elif rope[k][0] - rope[k-1][0] > 1: # horizontal knight move left
-                rope[k][0] -= 1
-                rope[k][1] += 1
-                
-                
-    if dir == 'R':
+    elif dir == 'R':
         rope[0][0] += 1
-        for k in range(1,len(rope)):
-            if rope[k-1][0] - rope[k][0] > 1: # previous knot is now two columns right
-                if rope[k-1][1] - rope[k][1] > 1: # diagonal down and right
-                    rope[k][1] += 1
-                elif rope[k][1] - rope[k-1][1] > 1: # diagonal up and right
-                    rope[k][1] -= 1
-                else:
-                    rope[k][1] = rope[k-1][1] # horizontal knight move either dir
-                rope[k][0] += 1 # always move right a space
-            elif rope[k-1][1] - rope[k][1] > 1: 
-                rope[k][0] += 1
-                rope[k][1] += 1
-            elif rope[k][1] - rope[k-1][1] > 1:
-                rope[k][0] += 1
-                rope[k][1] -= 1
-
-    if dir == 'L':
+    elif dir == 'L':
         rope[0][0] -= 1
-        for k in range(1,len(rope)):
-            if rope[k][0] - rope[k-1][0] > 1:
-                if rope[k][1] - rope[k-1][1] > 1:
-                    rope[k][1] -= 1
-                elif rope[k-1][1] - rope[k][1] > 1:
-                    rope[k][1] += 1
-                else:
-                    rope[k][1] = rope[k-1][1]
-                rope[k][0] -= 1
-            elif rope[k-1][1] - rope[k][1] > 1:
-                rope[k][0] -= 1
-                rope[k][1] += 1
-            elif rope[k][1] - rope[k-1][1] > 1:
-                rope[k][0] -= 1
-                rope[k][1] -= 1
 
+    for k in range(1,len(rope)):
+        cur = rope[k]
+        prev = rope[k-1]
+        distance = dist(cur, prev)
+        if distance == 4:
+            cur[0] = int((cur[0] + prev[0])/2)
+            cur[1] = int((cur[1] + prev[1])/2)
+        elif distance == 2:
+            if cur[0] == prev[0] or cur[1] == prev[1]:
+                cur[0] = int((cur[0] + prev[0])/2)
+                cur[1] = int((cur[1] + prev[1])/2)
+        elif distance == 3:
+            if prev[0] > cur[0]:
+                cur[0] += 1
+            else:
+                cur[0] -= 1
+            if prev[1] > cur[1]:
+                cur[1] += 1
+            else:
+                cur[1] -= 1
     return rope
 
 def print_grid(grid, rope):

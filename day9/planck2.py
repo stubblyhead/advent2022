@@ -59,7 +59,7 @@ def print_grid(grid, rope):
         
     print('\n')
         
-lines = open('testcase2').readlines(-1)
+lines = open('input').readlines(-1)
 
 above = below = left = right = 0
 cur_x = cur_y = 0
@@ -86,7 +86,6 @@ rope = [ [-left,above] for i in range(10) ]
 grid[above][-left] = True
 
 for l in lines:
-    print_grid(grid, rope)
     (dir, steps) = l.strip().split()
     steps = int(steps)
 
@@ -98,5 +97,4 @@ count = 0
 for i in grid:
     count += i.count(True)
 
-print_grid(grid, rope)
 print(count)

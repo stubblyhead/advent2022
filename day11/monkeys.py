@@ -1,6 +1,6 @@
 class Monkey:
     def __init__(self, items, operation, test): # items in list, operation is RHS of equation, test is array with comparison, true destination, and false destination
-        self.items = [items]
+        self.items = items
         self.operation = operation.split()
         self.modulo = int(test[0])
         self.true_dest = int(test[1])
@@ -43,10 +43,10 @@ for m in monkey_list:
     items = [int(i) for i in lines[1].split(': ')[1].split(',')]
     operation = lines[2].split('= ')[1]
     test = []
-    test[0] = lines[3].split()[-1]
-    test[1] = lines[4].split()[-1]
-    test[2] = lines[5].split()[-1]
-    monkeys.append(Monkey.new(items, operation, test))
+    test.append(lines[3].split()[-1])
+    test.append(lines[4].split()[-1])
+    test.append(lines[5].split()[-1])
+    monkeys.append(Monkey(items, operation, test))
 
 
     

@@ -45,7 +45,7 @@ for l in lines:
             sum += x * clock
         elif clock % 40 == 0:
             print(pixels)
-            pixels == ''
+            pixels = ''
         x += arg
 
 print(sum)

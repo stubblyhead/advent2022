@@ -1,4 +1,4 @@
-lines = open('testcase').readlines(-1)
+lines = open('input').readlines(-1)
 
 x = 1
 clock = 0

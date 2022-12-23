@@ -5,6 +5,7 @@ class Monkey:
         self.modulo = int(test[0])
         self.true_dest = int(test[1])
         self.false_dest = int(test[2])
+        self.count = 0
 
     def catch(self, new_item):
         self.items.append(new_item)
@@ -23,6 +24,7 @@ class Monkey:
         elif op == '+':
             self.items[0] += int(self.operation[2])
         self.items[0] = int(self.items[0]/3) # always divide by three after monkey looks at item
+        self.count += 1 # increment inspection counter
     
     def test_item(self):
         if self.items[0] % self.modulo == 0:
@@ -48,12 +50,16 @@ for m in monkey_list:
     monkeys.append(Monkey(items, operation, test))
 
 
-# going through one round for now
-for m in monkeys:  # every monkey gets a turn
-    for i in range(len(m.items)):  # iterating by item will probably cause issues since we're changing the list as we go
-        m.change_worry()  # update the value of the current object
-        receiver = m.test_item()  # figure out who gets the item next
-        m.throw(monkeys[receiver]) # throw it to that monkey
+for n in range(20):  # go through 20 rounds
+    for m in monkeys:  # every monkey gets a turn
+        for i in range(len(m.items)):  # iterating by item will probably cause issues since we're changing the list as we go
+            m.change_worry()  # update the value of the current object
+            receiver = m.test_item()  # figure out who gets the item next
+            m.throw(monkeys[receiver]) # throw it to that monkey
 
+counts = []
 for m in monkeys:
-    print(m.items)
+    counts.append(m.count)
+counts.sort()
+
+print(counts[-1] * counts[-2])

@@ -6,7 +6,6 @@ class Monkey:
         self.true_dest = int(test[1])
         self.false_dest = int(test[2])
 
-
     def catch(self, new_item):
         self.items.append(new_item)
 
@@ -49,5 +48,12 @@ for m in monkey_list:
     monkeys.append(Monkey(items, operation, test))
 
 
-    
-        
+# going through one round for now
+for m in monkey_list:  # every monkey gets a turn
+    for i in len(m.items):  # iterating by item will probably cause issues since we're changing the list as we go
+        m.change_worry()  # update the value of the current object
+        receiver = m.test_item()  # figure out who gets the item next
+        m.throw(monkey_list[receiver]) # throw it to that monkey
+
+for m in monkey_list:
+    print(m.items)

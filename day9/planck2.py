@@ -4,41 +4,75 @@ def move(dir, rope):
     if dir == 'U':
         rope[0][1] -= 1
         for k in range(1,len(rope)):
-            if rope[k][1] - rope[k-1][1] > 1: # next knot only moves if direction to current and direction of travel are the same
-                if rope[k][0] - rope[k-1][0] > 1:
+            if rope[k][1] - rope[k-1][1] > 1: # previous knot is now two rows above
+                if rope[k][0] - rope[k-1][0] > 1: # diagonal up and right
                     rope[k][0] -= 1
-                elif rope[k-1][0] - rope[k][0] > 1:
+                elif rope[k-1][0] - rope[k][0] > 1: # diagonal up and left
                     rope[k][0] += 1
                 else:
-                    rope[k][0] = rope[k-1][0]
+                    rope[k][0] = rope[k-1][0] # vertical knight move either directon
                 rope[k][1] -= 1  # always move up a space
-            elif rope[k-1][0] - rope[k][0] > 1:
+            elif rope[k-1][0] - rope[k][0] > 1: # horizontal knight move right
                 rope[k][0] += 1
                 rope[k][1] -= 1
-            elif rope[k][0] - rope[k-1][0] > 1:
+            elif rope[k][0] - rope[k-1][0] > 1: # horizontal knight move left
                 rope[k][0] -= 1
                 rope[k][1] -= 1
     
     if dir == 'D':
         rope[0][1] += 1
         for k in range(1,len(rope)):
-            if rope[k-1][1] - rope[k][1] > 1:
+            if rope[k-1][1] - rope[k][1] > 1: # previous knot is now two rows below
+                if rope[k-1][0] - rope[k][0] > 1: # diagonal down and right
+                    rope[k][0] += 1
+                elif rope[k][0] - rope[k-1][0] > 1: # diagonal down and left
+                    rope[k][0] -= 1
+                else:
+                    rope[k][0] = rope[k-1][0] #vertical knight move either direction
+                rope[k][1] += 1 # always move down a space
+            elif rope[k-1][0] - rope[k][0] > 1: # horizontal knight move right
+                rope[k][0] += 1
                 rope[k][1] += 1
-                rope[k][0] = rope[k-1][0]
-
+            elif rope[k][0] - rope[k-1][0] > 1: # horizontal knight move left
+                rope[k][0] -= 1
+                rope[k][1] += 1
+                
+                
     if dir == 'R':
         rope[0][0] += 1
         for k in range(1,len(rope)):
-            if rope[k-1][0] - rope[k][0] > 1:
+            if rope[k-1][0] - rope[k][0] > 1: # previous knot is now two columns right
+                if rope[k-1][1] - rope[k][1] > 1: # diagonal down and right
+                    rope[k][1] += 1
+                elif rope[k][1] - rope[k-1][1] > 1: # diagonal up and right
+                    rope[k][1] -= 1
+                else:
+                    rope[k][1] = rope[k-1][1] # horizontal knight move either dir
+                rope[k][0] += 1 # always move right a space
+            elif rope[k-1][1] - rope[k][1] > 1: 
                 rope[k][0] += 1
-                rope[k][1] = rope[k-1][1]
+                rope[k][1] += 1
+            elif rope[k][1] - rope[k-1][1] > 1:
+                rope[k][0] += 1
+                rope[k][1] -= 1
 
     if dir == 'L':
         rope[0][0] -= 1
         for k in range(1,len(rope)):
             if rope[k][0] - rope[k-1][0] > 1:
-                rope[k][0]-= 1
-                rope[k][1] = rope[k-1][1]
+                if rope[k][1] - rope[k-1][1] > 1:
+                    rope[k][1] -= 1
+                elif rope[k-1][1] - rope[k][1] > 1:
+                    rope[k][1] += 1
+                else:
+                    rope[k][1] = rope[k-1][1]
+                rope[k][0] -= 1
+            elif rope[k-1][1] - rope[k][1] > 1:
+                rope[k][0] -= 1
+                rope[k][1] += 1
+            elif rope[k][1] - rope[k-1][1] > 1:
+                rope[k][0] -= 1
+                rope[k][1] -= 1
 
     return rope
 
@@ -104,4 +138,5 @@ count = 0
 for i in grid:
     count += i.count(True)
 
+print_grid(grid, rope)
 print(count)

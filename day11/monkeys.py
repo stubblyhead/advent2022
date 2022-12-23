@@ -32,6 +32,22 @@ class Monkey:
             return self.false_dest
 
 
+with open('testcase') as f:
+    data = f.read()
+
+monkeys = []
+monkey_list = data.split('\n\n')
+
+for m in monkey_list:
+    lines = m.split('\n')
+    items = [int(i) for i in lines[1].split(': ')[1].split(',')]
+    operation = lines[2].split('= ')[1]
+    test = []
+    test[0] = lines[3].split()[-1]
+    test[1] = lines[4].split()[-1]
+    test[2] = lines[5].split()[-1]
+    monkeys.append(Monkey.new(items, operation, test))
+
 
     
         

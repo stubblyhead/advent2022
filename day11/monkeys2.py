@@ -39,7 +39,7 @@ class Monkey:
             return self.false_dest
 
 
-with open('testcase') as f:
+with open('input') as f:
     data = f.read()
 
 monkeys = []

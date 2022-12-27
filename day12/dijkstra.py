@@ -36,5 +36,4 @@ def get_moves(grid, node):  # node in [row, col] format
         if grid[row][col-1] - grid[row][col] <= 1:
             moves += 'L'
 
-
-
+    return moves

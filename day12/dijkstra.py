@@ -20,7 +20,7 @@ def get_moves(grid, node):  # node in [row, col] format
     (row, col) = node
     moves = ''
     # check above
-    if cur_row > 0:
+    if row > 0:
         if grid[row-1][col] - grid[row][col] <= 1:
             moves += 'U'
     # check below
@@ -28,7 +28,7 @@ def get_moves(grid, node):  # node in [row, col] format
         if grid[row+1][col] - grid[row][col] <= 1:
             moves += 'D'
     # check right
-    if col < len(grid[row] -1):
+    if col < len(grid[row]) -1:
         if grid[row][col+1] - grid[row][col] <= 1:
             moves += 'R'
     # check left
@@ -37,3 +37,8 @@ def get_moves(grid, node):  # node in [row, col] format
             moves += 'L'
 
     return moves
+
+for row in range(len(grid)):
+    for col in range(len(grid[row])):
+
+        print(get_moves(grid, [row,col]))

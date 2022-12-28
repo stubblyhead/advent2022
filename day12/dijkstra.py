@@ -59,7 +59,7 @@ def bfs(grid):  # will flesh this out
     visited = [grid.start]
     while visited:
         subtree_root = visited.pop()
-        if grid[subtree_root] == grid.dest:
+        if subtree_root == grid.dest:
             break # found the destination, so we don't need to keep looking
         (sub_row, sub_col) = subtree_root
         for d in grid[sub_row][sub_col].moves:

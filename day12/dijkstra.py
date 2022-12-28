@@ -62,43 +62,22 @@ def bfs(grid):  # will flesh this out
         if subtree_root == grid.dest:
             break # found the destination, so we don't need to keep looking
         (sub_row, sub_col) = subtree_root
-        for d in grid[sub_row][sub_col].moves:
+        for d in grid.topo[sub_row][sub_col].moves:
             (next_row,next_col) = d
-            if grid[next_row][next_col].parent == None:
-                grid[next_row][next_col].parent = subtree_root
+            if grid.topo[next_row][next_col].parent == None:
+                grid.topo[next_row][next_col].parent = subtree_root
                 visited.append(d)
     path_length = 0
     cur = grid.dest
     while cur != grid.start:
         path_length += 1
-        cur = grid[cur].parent
+        (row,col) = cur
+        cur = grid.topo[row][col].parent
 
     print(path_length)
 
 
 
-
-# # def get_moves(grid, node):  # node in [row, col] format
-#     (row, col) = node
-#     moves = ''
-#     # check above
-#     if row > 0:
-#         if grid[row-1][col] - grid[row][col] <= 1:
-#             moves += 'U'
-#     # check below
-#     if row < len(grid) - 1:
-#         if grid[row+1][col] - grid[row][col] <= 1:
-#             moves += 'D'
-#     # check right
-#     if col < len(grid[row]) -1:
-#         if grid[row][col+1] - grid[row][col] <= 1:
-#             moves += 'R'
-#     # check left
-#     if col > 0:
-#         if grid[row][col-1] - grid[row][col] <= 1:
-#             moves += 'L'
-
-#     return moves
 
 puzzle = Grid(grid)
 

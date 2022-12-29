@@ -104,19 +104,27 @@ grid = [ [ i for i in list(row) ] for row in data ]
 
 def bfs(grid): 
     frontier = [grid.start]
-    i = 0
-    level = {}
+    i = 1
+    (row,col) = grid.start
+    level = {grid.topo[row][col] : 0}
     while frontier:
-        subtree_root = frontier.pop()
-        if subtree_root == grid.dest:
-            level[subtree_root] = i
-            break # found the destination, so we don't need to keep looking
-        (sub_row, sub_col) = subtree_root
-        for d in grid.topo[sub_row][sub_col].moves:
-            level[d] = i
-            frontier.append(d)
+        next = []
+        for subtree_root in frontier:
+            (row,col) = subtree_root
+            if subtree_root == grid.dest:
+                next = []
+                break
+            for d in grid.topo[row][col].moves:
+                (row,col) = d
+                if grid.topo[row][col] not in level:
+                    level[grid.topo[row][col]] = i
+                    next.append(d)
+                    grid.topo[d[0]][d[1]].parent = subtree_root
+        frontier = next
         i += 1
-    print(level(grid[dest]))
+    (dest_row, dest_col) = grid.dest
+    print(level[grid.topo[dest_row][dest_col]])
+    
  
 
 
@@ -125,12 +133,4 @@ puzzle = Grid(grid)
 
 bfs(puzzle)
 
-count = 0
-for i in puzzle.topo:
-    for j in i:
-        if j.parent:
-            count += 1
-print(count)
-
-#puzzle.print()
 puzzle.printpath()

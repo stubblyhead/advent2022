@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 class Cell:
     def __init__(self, height):
         if height == 'S':
@@ -47,38 +49,88 @@ class Grid(list):
                     if self.topo[i][j-1].height - self.topo[i][j].height <= 1:
                         self.topo[i][j].moves.append([i,j-1])
 
+    def print(self):
+        thisline = ''
+        for i in self.topo:
+            for j in i:
+                thisline += chr(j.height + 96)
 
-with open('testcase') as f:
+            print(thisline)
+            thisline = ''
+
+    def printpath(self):
+        path = []
+        cur = self.dest
+        while cur != self.start:
+            (cur_row, cur_col) = cur
+            path.append(cur)
+            cur = self.topo[cur_row][cur_col].parent
+        temp = deepcopy(self)
+        
+        for step in range(len(path)):
+            (cur_row, cur_col) = path[step]
+            if temp.topo[cur_row][cur_col].height == 27:
+                temp.topo[cur_row][cur_col].height = 'E'
+            elif temp.topo[cur_row][cur_col].height == 0:
+                temp.topo[cur_row][cur_col].height = 'S'
+            else:
+                (prev_row, prev_col) = temp.topo[cur_row][cur_col].parent
+                if prev_row > cur_row:
+                    temp.topo[prev_row][prev_col].height = '↑'
+                elif prev_row < cur_row:
+                    temp.topo[prev_row][prev_col].height = '↓'
+                elif prev_col > cur_col:
+                    temp.topo[prev_row][prev_col].height = '←'
+                elif prev_col < cur_col:
+                    temp.topo[prev_row][prev_col].height = '→'
+        thisline = ''
+        for i in temp.topo:
+            for j in i:
+                if str(j.height).isnumeric():
+                    thisline += '.'
+                else:
+                    thisline += j.height
+            print(thisline)
+            thisline = ''
+        
+
+
+with open('input') as f:
     data = f.read().split('\n')
 
 grid = [ [ i for i in list(row) ] for row in data ]
 
 
 
-def bfs(grid):  # will flesh this out
-    visited = [grid.start]
-    while visited:
-        subtree_root = visited.pop()
+def bfs(grid): 
+    frontier = [grid.start]
+    i = 0
+    level = {}
+    while frontier:
+        subtree_root = frontier.pop()
         if subtree_root == grid.dest:
+            level[subtree_root] = i
             break # found the destination, so we don't need to keep looking
         (sub_row, sub_col) = subtree_root
         for d in grid.topo[sub_row][sub_col].moves:
-            (next_row,next_col) = d
-            if grid.topo[next_row][next_col].parent == None:
-                grid.topo[next_row][next_col].parent = subtree_root
-                visited.append(d)
-    path_length = 0
-    cur = grid.dest
-    while cur != grid.start:
-        path_length += 1
-        (row,col) = cur
-        cur = grid.topo[row][col].parent
-
-    print(path_length)
-
+            level[d] = i
+            frontier.append(d)
+        i += 1
+    print(level(grid[dest]))
+ 
 
 
 
 puzzle = Grid(grid)
 
 bfs(puzzle)
+
+count = 0
+for i in puzzle.topo:
+    for j in i:
+        if j.parent:
+            count += 1
+print(count)
+
+#puzzle.print()
+puzzle.printpath()

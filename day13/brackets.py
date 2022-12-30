@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 with open('input') as f:
     data = f.read()
 
@@ -5,7 +7,13 @@ pairs = data.split('\n\n')
 
 def cmp(l, r):
     result = 0  # pass through until we know we can do otherwise
+    was_zero = False # need to do some special handling if LHS == 0
+    if l == 0:  
+        was_zero = True
+        l = [l]
     while l:
+        if was_zero:
+            l = 0
         if abs(result) == 1:  # a later invocation determined if the pair is in order
             return result
         
@@ -39,8 +47,9 @@ for i in range(len(pairs)):
     left = eval(left)  # this seems like cheating, but probably will come back to bite me
     right = eval(right)
     
-    thispair = cmp(left,right)
+    thispair = cmp(deepcopy(left),deepcopy(right))
     if thispair == 1:
         sum += i + 1
+        print("pair %i\n%s comes before %s" % (i,left,right))
 
 print(sum)

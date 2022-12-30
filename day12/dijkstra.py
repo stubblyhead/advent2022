@@ -29,8 +29,10 @@ class Grid(list):
                 # not sure if these will be useful, but why not
                 if self.topo[i][j].height == 0:
                     self.start = [i,j]
+                    self.topo[i][j].height = 1
                 elif self.topo[i][j].height == 27:
                     self.dest = [i,j]
+                    self.topo[i][j].height = 26
 
                 # check above
                 if i > 0:

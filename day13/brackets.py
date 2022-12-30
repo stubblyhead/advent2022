@@ -35,7 +35,7 @@ def cmp(l, r):
             else:
                 result = cmp(l, [r])
     else:
-        if type(r) == list and len(r) > 0 and result != -1:  # determined correct order on l[-1] but r still had some values
+        if (type(r) == int or len(r) > 0) and result != -1:  # determined correct order on l[-1] but r still had some values
             return 1
     return result
     
